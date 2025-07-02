@@ -120,7 +120,7 @@ button:hover {
       loading.style.display = 'block';
 
       try {
-        const sheetURL = 'https://opensheet.vercel.app/18QClmPRcA6wxLYnDp5qijPhm2Si4s56oWWdZ-H-y0DE/Itpyx form';
+        const sheetURL = 'https://opensheet.vercel.app/2PACX-1vS-_RpAXm4602MLM5Oj2J5e8z2mcWnxSEXW77_GGAgphyha8Hj3qWs-PDgceDWDs5ogkrKmbC5900Wb/Sheet1';
         const res = await fetch(sheetURL);
         const data = await res.json();
         const entry = data.find(row => row.Email.toLowerCase() === email);
