@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -18,69 +17,67 @@
       align-items: center;
       min-height: 100vh;
       padding: 20px;
-    }
+    }h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3rem;
+  margin-top: 30px;
+  color: #00ffd5;
+  text-shadow: 2px 2px #000;
+}
 
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      margin-top: 30px;
-      color: #00ffd5;
-      text-shadow: 2px 2px #000;
-    }
+form, .cv-section {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  max-width: 500px;
+  width: 90%;
+  margin-bottom: 30px;
+}
 
-    form, .cv-section {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-      max-width: 500px;
-      width: 90%;
-      margin-bottom: 30px;
-    }
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
+button {
+  width: 100%;
+  background-color: #00c9a7;
+  color: white;
+  border: none;
+  padding: 14px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    button {
-      width: 100%;
-      background-color: #00c9a7;
-      color: white;
-      border: none;
-      padding: 14px;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+button:hover {
+  background-color: #02b39b;
+}
 
-    button:hover {
-      background-color: #02b39b;
-    }
+#loading {
+  display: none;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #fffd;
+}
 
-    #cv-form input {
-      margin: 5px 0;
-    }
+.note {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #fffd;
+  text-align: center;
+}
 
-    .note {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #fffd;
-      text-align: center;
-    }
   </style>
 </head>
-<body>
-
-  <h1>ITPYX Company Lahore</h1>
-
-  <!-- Employment Form -->
-  <form id="employment-form">
+<body>  <h1>ITPYX Company Lahore</h1>  <!-- Employment Form -->  <form id="employment-form">
     <h2>Employment Form</h2>
     <input type="text" name="Full Name" placeholder="Full Name" required>
     <input type="text" name="Father's Name" placeholder="Father's Name" required>
@@ -90,18 +87,14 @@
     <input type="text" name="City" placeholder="City" required>
     <button type="submit">Submit</button>
     <p class="note">After submission, you can download your CV below.</p>
-  </form>
-
-  <!-- CV Download Section -->
-  <div class="cv-section">
+  </form>  <!-- CV Download Section -->  <div class="cv-section">
     <h2>Download CV</h2>
     <form id="cv-form">
       <input type="email" id="emailInput" placeholder="Enter your Email to download CV" required>
       <button type="submit">Download CV</button>
+      <div id="loading">Generating CV... Please wait.</div>
     </form>
-  </div>
-
-  <script>
+  </div>  <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyujC-_fWEiL4L7MGKdOsxNrJVj33aHVFX9AZhR-CQfPg0YIDOzITsBk5GYczb5FQCK2Q/exec';
     const form = document.getElementById('employment-form');
 
@@ -119,35 +112,40 @@
     });
 
     const cvForm = document.getElementById('cv-form');
+    const loading = document.getElementById('loading');
+
     cvForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const email = document.getElementById('emailInput').value.trim().toLowerCase();
-      const sheetURL = 'https://opensheet.vercel.app/18QClmPRcA6wxLYnDp5qijPhm2Si4s56oWWdZ-H-y0DE/Itpyx form';
+      loading.style.display = 'block';
 
-      const res = await fetch(sheetURL);
-      const data = await res.json();
-      const entry = data.find(row => row.Email.toLowerCase() === email);
+      try {
+        const sheetURL = 'https://opensheet.vercel.app/18QClmPRcA6wxLYnDp5qijPhm2Si4s56oWWdZ-H-y0DE/Itpyx form';
+        const res = await fetch(sheetURL);
+        const data = await res.json();
+        const entry = data.find(row => row.Email.toLowerCase() === email);
 
-      if (!entry) {
-        alert("No entry found for this email.");
-        return;
-      }
+        if (!entry) {
+          alert("No entry found for this email.");
+          loading.style.display = 'none';
+          return;
+        }
 
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(20);
-      doc.text("ITPYX Company Lahore", 70, 20);
-      doc.setFontSize(12);
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(20);
+        doc.text("ITPYX Company Lahore", 60, 20);
+        doc.setFontSize(12);
 
-      doc.text(`Name: ${entry["Full Name"]}`, 20, 40);
-      doc.text(`Father's Name: ${entry["Father's Name"]}`, 20, 50);
-      doc.text(`Email: ${entry["Email"]}`, 20, 60);
-      doc.text(`WhatsApp: ${entry["Whatsapp No"]}`, 20, 70);
-      doc.text(`Qualification: ${entry["Qualification"]}`, 20, 80);
-      doc.text(`City: ${entry["City"]}`, 20, 90);
+        doc.text(`Name: ${entry["Full Name"]}`, 20, 40);
+        doc.text(`Father's Name: ${entry["Father's Name"]}`, 20, 50);
+        doc.text(`Email: ${entry["Email"]}`, 20, 60);
+        doc.text(`WhatsApp: ${entry["Whatsapp No"]}`, 20, 70);
+        doc.text(`Qualification: ${entry["Qualification"]}`, 20, 80);
+        doc.text(`City: ${entry["City"]}`, 20, 90);
 
-      doc.save(`${entry["Full Name"]}_CV.pdf`);
-    });
-  </script>
-</body>
-</html>
+        doc.save(`${entry["Full Name"]}_CV.pdf`);
+      } catch (error) {
+        alert("Error fetching CV data.");
+      } finally {
+        loading
